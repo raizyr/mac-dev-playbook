@@ -4,6 +4,8 @@ downloads: ~/.ansible-downloads
 configure_dotfiles: true
 configure_terminal: true
 configure_osx: true
+configure_directories: true
+configure_prezto: true
 
 # Set to 'true' to configure the Dock via dockutil.
 configure_dock: false
@@ -25,6 +27,7 @@ sudoers_custom_config: ""
 #   %admin ALL=(ALL) NOPASSWD: ALL
 
 dotfiles_repo: https://github.com/raizyr/dotfiles.git
+dotfiles_repo_version: main
 dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/src/github.com/raizyr/dotfiles
 dotfiles_files:
@@ -34,3 +37,107 @@ dotfiles_files:
   # - .osx
   - .vimrc
   - .tmux.conf
+  - .zfuncs
+  - .zcustom
+
+directories:
+  - ~/src
+  - ~/src/github.com
+  - ~/src/github.com/raizyr
+  - ~/bin
+  - ~/pkg
+  - ~/.vim
+  - ~/.vim/tmp/backups
+  - ~/.vim/tmp/swaps
+  - ~/.vim/tmp/undos
+
+homebrew_taps:
+  - homebrew/bundle
+  - homebrew/cask
+  - homebrew/cask-drivers
+  - homebrew/cask-fonts
+  - homebrew/core
+  - homebrew/services
+  - ankitpokhrel/jira-cli
+
+homebrew_installed_packages:
+  - ankitpokhrel/jira-cli/jira-cli
+  - ansible-lint
+  - autoconf
+  - awscli
+  - curl
+  - dive
+  - geoip
+  - gh
+  - gist
+  - git
+  - gnu-getopt
+  - gomplate
+  - grep
+  - helm
+  - jq
+  - k9s
+  - markdownlint-cli
+  - netmask
+  - pre-commit
+  - pyenv
+  - pyenv-virtualenv
+  - rbenv
+  - shellcheck
+  - shfmt
+  - starship
+  - telnet
+  - terraform-docs
+  - tfenv
+  - tflint
+  - tfsec
+  - tgenv
+  - thefuck
+  - tree
+  - vim
+  - wget
+  - yq
+  - zsh-completions
+
+homebrew_uninstalled_packages: []
+
+homebrew_cask_apps:
+  - 1password
+  - 1password-cli
+  - bartender
+  - discord
+  - font-fira-code
+  - google-chrome
+  - google-drive
+  - gpg-suite
+  - istat-menus
+  - iterm2
+  - keybase
+  - rectangle-pro
+  - slack
+  - spotify
+  - visual-studio-code
+  - yubico-yubikey-manager
+  - rancher
+
+homebrew_cask_uninstalled_apps:
+  - docker
+
+mas_installed_apps: []
+mas_email: ""
+mas_password: ""
+
+zsh_prezto_repo: https://github.com/sorin-ionescu/prezto.git
+zsh_prezto_repo_version: HEAD
+zsh_prezto_dest: ~/.zprezto
+zsh_prezto_contrib_dest: ~/.zprezto-contrib
+zsh_prezto_contrib_repos:
+  - name: zsh-z
+    repo: https://github.com/agkozak/zsh-z.git
+  - name: ohmyzsh
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    paths:
+      - plugins/aws
+  # - name: test
+  #   repo: https://github.com/ohmyzsh/ohmyzsh.git
+  #   paths: []

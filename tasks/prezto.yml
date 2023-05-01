@@ -1,0 +1,8 @@
+---
+- name: Clone Prezto repo
+  git:
+    repo: "{{ zsh_prezto_repo }}"
+    dest: "{{ zsh_prezto_dest }}"
+    version: "{{ zsh_prezto_repo_version }}"
+    recursive: yes
+    force: yes

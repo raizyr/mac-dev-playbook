@@ -1,0 +1,45 @@
+---
+- name: Ensure ~/.zprezto-contrib exists
+  ansible.builtin.file:
+    path: "{{ zsh_prezto_contrib_dest }}"
+    state: directory
+
+- name: Check prezto-contrib repos that need initial clone
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ zsh_prezto_contrib_dest }}/{{ item.name }}"
+    clone: no
+    update: no
+  register: output
+  loop: "{{ zsh_prezto_contrib_repos }}"
+
+- name: Clone but don't download prezto-contrib repos
+  ansible.builtin.command: "git clone --no-checkout --depth=1 --filter=tree:0 {{ item.item.repo }} {{ zsh_prezto_contrib_dest }}/{{ item.item.name }}"
+  loop: "{{ output.results }}"
+  when: item.changed
+
+- name: Set sparse checkout paths for prezto-contrib repos
+  ansible.builtin.shell:
+    cmd: >
+      cmp --silent <(git sparse-checkout list) <(echo "{{ item.paths|sort|join('\n') }}")
+      && printf "NO_CHANGE" 
+      || git sparse-checkout set {{ item.paths|join(' ') }}
+    chdir: "{{ zsh_prezto_contrib_dest }}/{{ item.name }}"
+    executable: bash
+  diff: false
+  register: sparse_checkout
+  changed_when: sparse_checkout.stdout != "NO_CHANGE"
+  loop: "{{ zsh_prezto_contrib_repos }}"
+  when: not ansible_check_mode and item.paths is defined
+
+- name: Checkout prezto-contrib repos
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: "{{ zsh_prezto_contrib_dest }}/{{ item.name }}"
+    depth: 1
+    clone: yes
+    update: yes
+    version: "{{ item.version | default('HEAD') }}"
+    recursive: yes
+    force: yes
+  loop: "{{ zsh_prezto_contrib_repos }}"

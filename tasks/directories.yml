@@ -1,0 +1,7 @@
+---
+# Setup directory structure
+- name: Ensure HomeDir directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ directories }}"
