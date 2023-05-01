@@ -15,7 +15,7 @@ sudo pip3 install --upgrade pip
 sudo pip3 install --ignore-installed ansible
 
 # Clone the repository to your local drive.
-git clone https://github.com/geerlingguy/mac-dev-playbook.git ~/.mac-dev-playbook
+git clone https://github.com/raizyr/mac-dev-playbook.git ~/.mac-dev-playbook
 
 pushd ~/.mac-dev-playbook
 
