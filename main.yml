@@ -7,22 +7,15 @@
 
   pre_tasks:
     - name: Include playbook configuration.
-      include_vars: "{{ item }}"
+      ansible.builtin.include_vars: "{{ item }}"
       with_fileglob:
         - "{{ playbook_dir }}/config.yml"
       tags: ["always"]
 
-    - import_tasks: tasks/directories.yml
+    - name: Include directories tasks
+      ansible.builtin.import_tasks: tasks/directories.yml
       when: configure_directories
       tags: ["directories"]
-
-    - import_tasks: tasks/prezto.yml
-      when: configure_prezto
-      tags: ["prezto"]
-
-    - import_tasks: tasks/prezto-contrib.yml
-      when: configure_prezto
-      tags: ["prezto-contrib"]
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -51,7 +44,7 @@
       tags: ["post"]
       block:
         - name: Run configured post-provision ansible task files.
-          include_tasks: "{{ outer_item }}"
+          ansible.builtin.include_tasks: "{{ outer_item }}"
           loop_control:
             loop_var: outer_item
           with_fileglob: "{{ post_provision_tasks | default(omit) }}"

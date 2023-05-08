@@ -5,7 +5,6 @@ configure_dotfiles: true
 configure_terminal: true
 configure_osx: true
 configure_directories: true
-configure_prezto: true
 
 # Set to 'true' to configure the Dock via dockutil.
 configure_dock: false
@@ -27,12 +26,14 @@ sudoers_custom_config: ""
 #   %admin ALL=(ALL) NOPASSWD: ALL
 
 dotfiles_repo: https://github.com/raizyr/dotfiles.git
-dotfiles_repo_version: main
+dotfiles_repo_version: HEAD
 dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/src/github.com/raizyr/dotfiles
 dotfiles_files:
   - .zshrc
+  - .zimrc
   - .zshenv
+  - .zprofile
   - .gitignore
   # - .inputrc
   # - .osx
@@ -40,6 +41,7 @@ dotfiles_files:
   - .tmux.conf
   - .zfuncs
   - .zcustom
+  - .config/starship.toml
 
 directories:
   - ~/src
@@ -51,6 +53,7 @@ directories:
   - ~/.vim/tmp/backups
   - ~/.vim/tmp/swaps
   - ~/.vim/tmp/undos
+  - ~/.config
 
 homebrew_taps:
   - homebrew/bundle
@@ -114,12 +117,15 @@ homebrew_cask_apps:
   - istat-menus
   - iterm2
   - keybase
+  - rancher
   - rectangle-pro
+  - sdm
   - slack
   - spotify
   - visual-studio-code
   - yubico-yubikey-manager
-  - rancher
+
+homebrew_cask_accept_external_apps: true
 
 homebrew_cask_uninstalled_apps:
   - docker
@@ -127,18 +133,3 @@ homebrew_cask_uninstalled_apps:
 mas_installed_apps: []
 mas_email: ""
 mas_password: ""
-
-zsh_prezto_repo: https://github.com/sorin-ionescu/prezto.git
-zsh_prezto_repo_version: HEAD
-zsh_prezto_dest: ~/.zprezto
-zsh_prezto_contrib_dest: ~/.zprezto-contrib
-zsh_prezto_contrib_repos:
-  - name: zsh-z
-    repo: https://github.com/agkozak/zsh-z.git
-  - name: ohmyzsh
-    repo: https://github.com/ohmyzsh/ohmyzsh.git
-    paths:
-      - plugins/aws
-  # - name: test
-  #   repo: https://github.com/ohmyzsh/ohmyzsh.git
-  #   paths: []
