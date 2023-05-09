@@ -110,6 +110,7 @@ homebrew_cask_apps:
   - 1password-cli
   - bartender
   - discord
+  - docker
   - font-fira-code
   - google-chrome
   - google-drive
@@ -117,7 +118,6 @@ homebrew_cask_apps:
   - istat-menus
   - iterm2
   - keybase
-  - rancher
   - rectangle-pro
   - sdm
   - slack
@@ -128,7 +128,7 @@ homebrew_cask_apps:
 homebrew_cask_accept_external_apps: true
 
 homebrew_cask_uninstalled_apps:
-  - docker
+  - rancher
 
 mas_installed_apps: []
 mas_email: ""

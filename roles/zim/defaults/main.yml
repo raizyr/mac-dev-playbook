@@ -1,0 +1,5 @@
+---
+configure_zim: true
+
+zim_home: ~/.zim
+zim_zmodule_tool: git
