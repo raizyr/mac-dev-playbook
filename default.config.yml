@@ -56,13 +56,14 @@ directories:
   - ~/.config
 
 homebrew_taps:
+  - ankitpokhrel/jira-cli
+  - hashicorp/tap
   - homebrew/bundle
   - homebrew/cask
   - homebrew/cask-drivers
   - homebrew/cask-fonts
   - homebrew/core
   - homebrew/services
-  - ankitpokhrel/jira-cli
 
 homebrew_installed_packages:
   - ankitpokhrel/jira-cli/jira-cli
@@ -78,6 +79,7 @@ homebrew_installed_packages:
   - gnu-getopt
   - gomplate
   - grep
+  - hashicorp/tap/nomad
   - helm
   - jq
   - k9s
@@ -101,6 +103,7 @@ homebrew_installed_packages:
   - vim
   - wget
   - yq
+  - zoxide
   - zsh-completions
 
 homebrew_uninstalled_packages: []
