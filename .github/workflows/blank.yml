@@ -25,9 +25,9 @@ jobs:
       - name: Run command false first
         if: always()
         run: false | true
-        shell: bash {0}
+        shell: bash
       
       - name: Run command false last
         if: always()
         run: true | false
-        shell: bash {0}
+        shell: bash
