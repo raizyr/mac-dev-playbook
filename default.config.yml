@@ -30,7 +30,7 @@ dotfiles_repo_version: HEAD
 dotfiles_repo_accept_hostkey: true
 dotfiles_repo_local_destination: ~/src/github.com/raizyr/dotfiles
 dotfiles_files:
-  - .zshrc
+  # - .zshrc
   - .zimrc
   - .zshenv
   - .zprofile
@@ -85,6 +85,7 @@ homebrew_installed_packages:
   - jq
   - k9s
   - markdownlint-cli
+  - mas
   - netmask
   - pre-commit
   - pyenv

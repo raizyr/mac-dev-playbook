@@ -1,0 +1,13 @@
+---
+- name: Configure host.
+  hosts: all
+
+  vars_files:
+    - default.config.yml
+
+  tasks:
+    - name: Print vars
+      ansible.builtin.debug:
+        var: item
+      loop: "{{ vars | dict2items }}"
+      when: item.key | regex_search('.*user.*')

@@ -9,5 +9,13 @@ platforms:
     pre_build_image: true
 provisioner:
   name: ansible
+  inventory:
+    group_vars:
+      all:
+        zim_zshrc: "~/.zshrc"
+        zim_zshrc_injection: "source ${HOME}/.ziminit.zsh"
+        zim_init_file: ".ziminit.zsh"
+        zim_user_dir: "~"
+
 verifier:
   name: ansible

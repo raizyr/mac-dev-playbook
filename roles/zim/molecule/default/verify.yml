@@ -3,21 +3,34 @@
 
 - name: Verify
   hosts: all
-  vars:
-    zim_zshrc: "/root/.zshrc"
   gather_facts: false
   tasks:
     - name: "Test zim:fw - test that ~/.zshrc has been modified"
       block:
-        - name: "Test zim:fw - retrieve information from path '{{ zim_zshrc }}'"
-          ansible.builtin.stat:
-            path: "{{ zim_zshrc }}"
-          register: remote_file
+        - name: "Test zim:fw - check for injected block in file '{{ zim_zshrc }}'"
+          ansible.builtin.blockinfile:
+            block: '{{ zim_zshrc_injection }}'
+            path: '{{ zim_zshrc }}'
+          check_mode: true
+          register: injection_check
 
-        - name: "Test zim:fw - assert that file is created correctly '{{ zim_zshrc }}'"
+        - name: "Test zim:fw - assert that file contains the expected block '{{ zim_zshrc }}'"
           ansible.builtin.assert:
+            fail_msg: "zim:fw - '{{ zim_zshrc }}' does not contain the expected block '{{ zim_zshrc_injection }}'"
+            success_msg: "zim:fw - '{{ zim_zshrc }}' contains the expected block"
             that:
-              - "remote_file.stat.exists"
-              - "remote_file.stat.isreg" # is a regular file
-              - "remote_file.stat.path == '{{ zim_zshrc }}'"
-              - "remote_file.stat.mode == '0644'"
+              - not injection_check.changed
+
+    - name: "Test zim:fw - test that ~/.zimrc has been created"
+      block:
+        - name: "Test zim:fw - retrieve information from path '{{ zim_init_file }}'"
+          ansible.builtin.stat:
+            path: '{{ zim_user_dir }}/{{ zim_init_file }}'
+          register: zimrc
+
+        - name: "Test zim:fw - assert that file exists '{{ zim_init_file }}'"
+          ansible.builtin.assert:
+            fail_msg: "zim:fw - '{{ zim_init_file }}' does not exist"
+            success_msg: "zim:fw - '{{ zim_init_file }}' exists"
+            that:
+              - zimrc.stat.exists

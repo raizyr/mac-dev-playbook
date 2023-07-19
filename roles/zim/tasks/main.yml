@@ -1,30 +1,37 @@
 ---
 - name: Ensure ~/.zshrc exists
-  ansible.builtin.file:
-    path: ~/.zshrc
-    state: touch
+  ansible.builtin.stat:
+    path: "{{ zim_user_dir }}/.zshrc"
+  register: zshrc_stat
   when: configure_zim
 
-- name: Insert/Update "Zim:FW init" in .zshrc
-  ansible.builtin.blockinfile:
-    path: ~/.zshrc
-    block: |
-      zstyle ':zim:zmodule' use '{{ zim_zmodule_tool }}'
+- name: "Install Zim:FW"
+  block:
+    - name: "zim:fw - Create .ziminit.zsh"
+      ansible.builtin.template:
+        src: ziminit.zsh.j2
+        dest: "{{ zim_user_dir }}/{{ zim_init_file }}"
+        owner: "{{ zim_user }}"
+        group: "{{ zim_user }}"
+        mode: "0644"
+      tags: ziminit
 
-      ZIM_HOME={{ zim_home }}
-      # Download zimfw plugin manager if missing.
-      if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-        curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
-            https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
-      fi
+    - name: "Zim:FW - Create simple .zimrc"
+      ansible.builtin.copy:
+        src: zimrc
+        dest: "{{ zim_user_dir }}/.zimrc"
+        owner: "{{ zim_user }}"
+        group: "{{ zim_user }}"
+        mode: "0644"
+      tags: zimrc
 
-      # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
-      if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-        source ${ZIM_HOME}/zimfw.zsh init -q
-      fi
+    - name: Insert/Update "Zim:FW init" in .zshrc
+      ansible.builtin.blockinfile:
+        path: ~/.zshrc
+        block: "{{ zim_zshrc_injection }}"
+        backup: yes
+        insertbefore: "BOF"
+        state: present
+      tags: zshrc
 
-      # Initialize modules.
-      source ${ZIM_HOME}/init.zsh
-    backup: yes
-    state: present
-  when: configure_zim
+  when: configure_zim and zshrc_stat.stat.exists

@@ -1,5 +1,11 @@
 ---
 configure_zim: true
 
-zim_home: ~/.zim
+zim_user: "{{ ansible_user_id }}"
+zim_user_dir: "{{ ansible_user_dir }}"
+
+zim_home: "~/.zim"
 zim_zmodule_tool: git
+
+zim_init_file: ".ziminit.zsh"
+zim_zshrc_injection: 'source "${HOME}/{{ zim_init_file }}"'

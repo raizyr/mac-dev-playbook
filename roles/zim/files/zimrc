@@ -1,0 +1,8 @@
+# vim:expandtab ts=4 sw=4 syntax=zsh filetype=zsh
+# shellcheck disable
+
+# This is a very simple zimrc file.
+# https://zimfw.sh/docs/install/#create-~%2F.zimrc
+# You should customize it to your liking.
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
